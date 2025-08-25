@@ -1,37 +1,79 @@
-# Telegram + Ollama Chat Bot
+# 🤖 Telegram Bot with Ollama (LLM Integration)
 
-A lightweight Telegram bot that delegates every query to an Ollama LLM,
-keeps conversation history locally, and can be extended easily.
+This project is a **Telegram chatbot** powered by a local **LLM (Large Language Model)** through [Ollama](https://ollama.ai/).  
+The bot acts like a virtual human: it remembers conversation history, has a custom persona, and interacts naturally with users.
 
-## Features
+---
 
-- **Stateful conversations** – last 10 exchanges are sent with every request.
-- **Custom persona** – set the system prompt via `BOT_PERSONA`.
-- **Optional periodic chatter** – send a ping every N seconds in a group.
-- **Docker‑friendly** – just expose the environment variables.
+## ✨ Features
+- Stores conversation history in **SQLite**.
+- Maintains context between messages.
+- Responds with a custom **persona**.
+- Runs locally using **Ollama** models.
+- Simple and lightweight setup.
 
-## Getting Started
+---
+
+## 📦 Installation
+
+### 1. Install dependencies
+```bash
+pip install python-telegram-bot==20.7 requests
+SQLite comes preinstalled with Python.
+```
+2. Install and run Ollama
+Download Ollama: https://ollama.ai/download
+
+Start the server:
+
+ollama serve
+Pull a model of your choice (for example gpt-oss:20b or llama3:8b):
 
 ```bash
-# Git clone
-git clone https://github.com/youruser/telegram-ollama-bot.git
-cd telegram-ollama-bot
 
-# (Optional) Set up a virtual environment
-python3 -m venv .venv
-source .venv/bin/activate
+ollama pull gpt-oss:20b
+```
+3. Create a Telegram Bot
+Open @BotFather in Telegram.
 
-# Install dependencies
-pip install -r requirements.txt
+Use /newbot to create a bot and get your API token.
 
-# Create a `.env` file:
-cat <<EOF > .env
-BOT_TOKEN="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
-BOT_NAME="Бенджамин"
-BOT_PERSONA="Ты всегда отвечаешь с точки зрения дружелюбного инженера."
-OLLAMA_URL="http://localhost:11434/api/chat"
-OLLAMA_MODEL="gpt-oss:20b"
-EOF
+Paste the token into the BOT_TOKEN variable in the code.
 
-# Run the bot
-python telegram_bot.py
+⚙️ Configuration
+At the top of main.py, update the settings:
+
+```python
+
+OLLAMA_API_URL = "http://localhost:11434/api/chat"  # Ollama server URL
+OLLAMA_MODEL = "gpt-oss:20b"  # Model to use
+DB_PATH = "chat_memory.db"     # SQLite database file
+BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+BOT_NAME = "Benjamin"          # Bot persona name
+
+```
+You can also customize the persona in BOT_PERSONA to adjust how the bot behaves.
+
+🚀 Run the bot
+Run:
+
+```bash
+
+python main.py
+```
+If everything is set up correctly, you will see:
+Bot started...
+
+📂 Project structure
+bash
+
+main.py          # Bot source code
+chat_memory.db   # SQLite database with chat history
+README.md        # Documentation
+
+💡 Tips
+For faster responses, use quantized models (e.g. llama3:8b-q4_K_M).
+
+Start testing in private chat with your bot before wider use.
+
+Conversation history is stored locally in chat_memory.db — you can reset it by deleting the file.
