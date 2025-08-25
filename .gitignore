@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.env
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+ENV/
+
+# Database file
+chat_memory.db
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
