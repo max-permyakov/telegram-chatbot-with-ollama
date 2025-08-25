@@ -12,16 +12,13 @@ import requests
 import json
 
 # Настройки
-OLLAMA_API_URL = "http://localhost:11434/api/chat"
-OLLAMA_MODEL = "gpt-oss:20b"
-DB_PATH = "chat_memory.db"
-BOT_TOKEN = ""#Token tg
-BOT_NAME = ""
+OLLAMA_API_URL = "http://localhost:11434/api/chat"  # Ollama server URL
+OLLAMA_MODEL = "gpt-oss:20b"  # Model to use
+DB_PATH = "chat_memory.db"     # SQLite database file
+BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+BOT_NAME = "Benjamin"          # Bot persona name
 BOT_PERSONA = (
-    f"Тебя зовут {BOT_NAME}. Ты интелектуал, начитанный, знаешь много интересных фактов. Любишь программирование. Выражаешь свои мысли кратко но ёмко как Чехов. "
-    "Ты не нейросеть, а виртуальный человек. "
-    "и помнишь, о чём он рассказывал раньше."
-)
+    f"Тебя зовут {BOT_NAME}. Ты интелектуал, начитанный, знаешь много интересных фактов. Любишь программирование")# Example
 
 # Логгирование
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
