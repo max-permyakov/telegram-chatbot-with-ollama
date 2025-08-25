@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Telegram Bot that talks to an Ollama LLM and remembers conversation history.
-Ready to be pushed to GitHub – secrets are read from environment variables.
+
 """
 
 import logging
@@ -88,27 +88,7 @@ async def start(update: Update, *_: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
-async def _handle_message(update: Update, ctx: ContextTypes.DEFAULT_TYPE) -> None:
-    """General message handler – works in private chats and groups."""
-    user_id = update.effective_user.id
-    text = update.message.text
 
-    db.add_message(user_id, "user", text)
-    answer = _ask_ollama(user_id, text)
-    db.add_message(user_id, "assistant", answer)
-
-    await update.message.reply_text(answer)
-
-
-async def periodic_chatter(context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a friendly reminder to a specific chat every few minutes."""
-    chat_id = context.job.data["chat_id"]
-    samples = [
-        "Привет, как настроение? 😊",
-        f"{config.name} на связи! Задавайте вопросы.",
-        "Кто поедет на выходных куда-нибудь?",
-    ]
-    await context.bot.send_message(chat_id, random.choice(samples))
 
 # --------------------------------------------------------------------------- #
 # Application bootstrap
@@ -119,11 +99,7 @@ def main() -> None:
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(Filters.TEXT & Filters.ChatType.private, _handle_message))
-    # Uncomment the next line if you want the same behaviour in groups
-    # app.add_handler(MessageHandler(Filters.TEXT & Filters.ChatType.group, _handle_message))
-
-    # Periodic job – replace 12345678 with the group chat id you want to poll.
-    # app.job_queue.run_repeating(periodic_chatter, interval=1800, first=60, data={"chat_id": 12345678})
+ 
 
     logger.info("Bot is up and running")
     app.run_polling()
